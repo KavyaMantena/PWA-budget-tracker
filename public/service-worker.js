@@ -3,8 +3,10 @@ const VERSION = "version_01";
 const CACHE_NAME = APP_PREFIX + VERSION;
 const FILES_TO_CACHE = [
   "./index.html",
-  "./css/stu;es/css",
+  "./",
+  "./css/styles.css",
   "./js/index.js",
+  "./js/idb.js",
   "./icons/icon-72x72.png",
   "./icons/icon-96x96.png",
   "./icons/icon-128x128.png",
@@ -13,6 +15,7 @@ const FILES_TO_CACHE = [
   "./icons/icon-192x192.png",
   "./icons/icon-384x384.png",
   "./icons/icon-512x512.png",
+  "/api/transaction",
 ];
 
 //install cache
@@ -28,13 +31,13 @@ self.addEventListener("install", function (e) {
 self.addEventListener("activate", function (e) {
   e.waitUntil(
     caches.keys().then(function (keyList) {
-      let cacheKeepList = keyList.fileter(function (key) {
+      let cacheKeepList = keyList.filter(function (key) {
         return key.indexOf(APP_PREFIX);
       });
       cacheKeepList.push(CACHE_NAME);
       return Promise.all(
         keyList.map(function (key, i) {
-          if (cacheKeeplist.indexOf(key) === -1) {
+          if (cacheKeepList.indexOf(key) === -1) {
             console.log("deleting cache : " + keyList[i]);
             return caches.delete(keyList[i]);
           }
